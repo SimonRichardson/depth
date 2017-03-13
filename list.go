@@ -79,6 +79,12 @@ func (l *List) Len() int {
 	return len(l.left) + amount
 }
 
+func (l *List) RemoveAll() {
+	l.left = make([]s.Action, 0)
+	l.right = make([]s.Action, 0)
+	l.current = nil
+}
+
 func (l *List) LeftIter() s.Iterator {
 	return &iterator{append(l.left, l.current)}
 }
@@ -99,4 +105,8 @@ func (i *iterator) Next() s.Action {
 	val := i.values[0]
 	i.values = i.values[1:]
 	return val
+}
+
+func (i *iterator) Clone() s.Iterator {
+	return &iterator{append([]s.Action{}, i.values...)}
 }
